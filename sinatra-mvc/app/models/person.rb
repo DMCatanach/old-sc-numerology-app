@@ -38,6 +38,9 @@ class Person < ActiveRecord::Base
 		message = message
 	end
 
+
+	#this bit of code is supposed to add "Your number is" with a filled-in number followed by the message. 
+	#it has not been modified to work with the template system 
 	def self.get_your_path_number
 		your_number = get_birth_path_num(get_birthdate)
 		your_message = path_message(your_number)

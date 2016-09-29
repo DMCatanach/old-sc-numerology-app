@@ -1,25 +1,8 @@
 require 'sinatra'
 
-
-def setup_index_view
-	birthdate = params['birthdate']  
-	path_num = Person.get_birth_path_num(birthdate)
-	@message = Person.path_message(path_num)
-	erb :index
-end	
-
-get '/' do 
-	erb :form
-end
-
-
 =begin
-The following and everything that isn't pulling something from the database, is now broken, because it's trying to call "determine_path_number", 
-which I had to change to pass the spec tests. I don't know where the hell it's calling it from, though. I've run find on that string, 
-and it's only showing up in comments. Changing it back in my Person class did not help, still throwing an error. Let's fix this later. 
-At least the part I'm working with right now isn't broken. NEVER MIND. IT IS FIXED. BUT I FORGOT TO RESTART THE SERVER AFTER MAKING 
-THOSE CHANGES. THAT IS AN IMPORTANT STEP! 
-However, it is still showing a dangling "Your numology number is" because I haven't cleaned that up yet. 
+Remember to restart server after making changes, otherwise, it won't pick it up.  
+Also, it is still showing a dangling "Your numology number is" because I haven't cleaned that up yet. 
 =end
 
 get '/:birthdate' do 
@@ -31,6 +14,10 @@ get '/message/:path_num' do
 	@message = Person.path_message(path_num) 
 	erb :index 
 end 
+
+get '/' do 
+	erb :form
+end
 
 post '/' do 
 	birthdate = params[:birthdate].gsub("-","")
@@ -44,6 +31,16 @@ post '/' do
 	end
 end
 
+def setup_index_view
+	birthdate = params['birthdate']  
+	path_num = Person.get_birth_path_num(birthdate)
+	@message = Person.path_message(path_num)
+	erb :index
+end	
+
+
+=begin 
+These are some legacy routes from the first lessons on routes. 
 post '/' do 
 	"#{params}"
 end
@@ -56,6 +53,7 @@ get '/newpage' do
 	erb :newpage
 end  
 
+=end
 
 
 
