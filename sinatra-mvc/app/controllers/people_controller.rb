@@ -4,8 +4,8 @@ get '/people' do
 end
 
 get '/people/new' do 
-	@person = Person.new  #the addition of this makes the route work, but submit button doesn't work, duplicates 'people' in the route, like the edit page was
-	erb :"/people/new"  	#fixed
+	@person = Person.new  
+	erb :"/people/new"  	
 end 
 
 
@@ -17,7 +17,7 @@ post '/people' do
 	end 
 
 	person = Person.create(first_name: params[:first_name], last_name: params[:last_name], birthdate: birthdate) 
-	redirect "/people/#{person.id}"  #fixed this, but delete redirect is now broken - deletes from database, but doesn't go back to a page
+	redirect "/people/#{person.id}" 
 end 
 
 get '/people/:id/edit' do 
@@ -25,13 +25,13 @@ get '/people/:id/edit' do
 	erb :"/people/edit"
 end 
 
-put 'people/:id' do 
+put '/people/:id' do 
 	person = Person.find(params[:id])
 	person.first_name = params[:first_name] 
 	person.last_name = params[:last_name] 
 	person.birthdate = params[:birthdate] 
 	person.save 
-	redirect "/people/#{person.id}" #this redirect is not working. it's going to the correct url, but Sinatra doesn't know the ditty
+	redirect "/people/#{person.id}" 
 end 
 
 get '/people/:id' do 
@@ -44,9 +44,9 @@ end
 delete '/people/:id' do 
 	person = Person.find(params[:id]) 
 	person.delete 
-	redirect "/people/"
+	redirect "/people"
 end
 
-#9/28/16 post and put routes not working, therefore cannot currently create or edit people. But delete works! Edit a person spec still failing. 
-#9/29/16 @ 13:41 - post works, can create new people. Can delete them too. But cannot edit, and redirect from deleting and editing broken 
+
+
 
